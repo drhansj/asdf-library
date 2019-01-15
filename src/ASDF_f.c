@@ -90,7 +90,7 @@ void asdf_define_station_xml_f_(hid_t *group_id, int *StationXML_length,
 void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
                           long long int *start_time, double *sampling_rate,
                           char *event_name, char *waveform_name,
-                          int *data_id) {
+                          hid_t *data_id) {
   *data_id = ASDF_define_waveform(*loc_id, *nsamples, *start_time,
                                   *sampling_rate, event_name, waveform_name);
 }
@@ -99,7 +99,7 @@ void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
 void asdf_define_waveforms_f_(hid_t *loc_id, int *num_waveforms, int *nsamples,
                               long long int *start_time, double *sampling_rate,
                               char *event_name, char **waveform_names,
-                              int *data_id, int *err) {
+                              hid_t *data_id, int *err) {
   *err = ASDF_define_waveforms(*loc_id, *num_waveforms, *nsamples,
                                *start_time, *sampling_rate,
                                event_name, waveform_names,

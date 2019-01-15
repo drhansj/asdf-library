@@ -15,6 +15,12 @@ target_link_libraries(write_ASDF
                       ${HDF5_LIBRARIES}
                       ${MPI_LIBRARIES})
 
+add_executable(read_ASDF read_ASDF.cpp)
+target_link_libraries(read_ASDF
+                      asdf
+                      ${HDF5_LIBRARIES}
+                      ${MPI_LIBRARIES})
+
 add_executable(write_example_f90 write_example.f90)
 target_link_libraries(write_example_f90
                       asdf
@@ -31,5 +37,5 @@ target_link_libraries(read_example_f90
 
 set_property(TARGET write_example_f90 PROPERTY LINKER_LANGUAGE Fortran)
 set_property(TARGET read_example_f90 PROPERTY LINKER_LANGUAGE Fortran)
-install(FILES write_ASDF.c write_example.f90 read_example.f90
+install(FILES write_ASDF.c read_ASDF.cpp write_example.f90 read_example.f90
         DESTINATION ${CMAKE_INSTALL_DOCDIR}/examples/)

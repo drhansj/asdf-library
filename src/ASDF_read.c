@@ -274,5 +274,41 @@ hid_t ASDF_open_waveform_path(hid_t file_id, const char *station_name, const cha
 
 }
 
+herr_t ASDF_read_quakeml(hid_t file_id, char **quakeml_string) {
+  char *path = "/QuakeML";
+  hid_t dataset_id;
+  CHK_H5(dataset_id = H5Dopen(file_id, path, H5P_DEFAULT));
+  int quakeml_len;
+  CHK_H5(quakeml_len = ASDF_get_num_elements_dataset(dataset_id));
+  quakeml_len++;  // make a space for null terminator
+  *quakeml_string = (char *) malloc(quakeml_len * sizeof(char));
+  H5Dread(dataset_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, 
+      *quakeml_string);
+  *(*quakeml_string+quakeml_len-1)='\0'; // Need to terminate the string
+  CHK_H5(H5Dclose(dataset_id));
 
+  return 0; // Success
+}
 
+herr_t ASDF_read_stationxml(hid_t waveforms_grp_id, 
+    const char *station_name, char **staxml_string) {
+  hid_t stn_id;
+  CHK_H5(stn_id = H5Gopen(waveforms_grp_id, station_name));
+  hid_t dataset_id;
+
+  char *path = "StationXML";
+  CHK_H5(dataset_id = H5Dopen(stn_id, path, H5P_DEFAULT));
+
+  int staxml_len;
+  CHK_H5(staxml_len = ASDF_get_num_elements_dataset(dataset_id));
+  staxml_len++;  // make a space for null terminator
+  *staxml_string = (char *) malloc(staxml_len * sizeof(char));
+
+  H5Dread(dataset_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, 
+      *staxml_string);
+  *(*staxml_string+staxml_len-1)='\0'; // Need to terminate the string
+  CHK_H5(H5Gclose(stn_id));
+  CHK_H5(H5Dclose(dataset_id));
+
+  return 0; // Success
+}

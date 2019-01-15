@@ -186,6 +186,8 @@ hid_t ASDF_open(const char *filename, MPI_Comm comm);
 hid_t ASDF_open_stations_group(hid_t loc_id, const char *station_name);
 hid_t ASDF_open_waveform(hid_t loc_id, const char *waveform_name);
 hid_t ASDF_open_serial(const char *filename);
+herr_t ASDF_read_quakeml(hid_t file_id, char ** quakeml_string);
+herr_t ASDF_read_stationxml(hid_t waveforms_grp_id, const char *station_name, char **staxml_string);
 
 #ifdef __cplusplus
 }

@@ -42,6 +42,7 @@ add_library (asdf
              ${SRC_DIR}/gen_provenance_id.cpp
              ${SRC_DIR}/gen_provenance_entity.cpp
              ${SRC_DIR}/gen_sf_provenance.cpp
+             ${SRC_DIR}/asdf_xml_utilities.cpp
              ${SRC_DIR}/ASDF_f.c)
 
 target_link_libraries(asdf
